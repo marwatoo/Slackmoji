@@ -5,13 +5,19 @@ import os
 import pyperclip
 import emoji
 import re
-
 from PyQt6.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt6.QtGui import QIcon, QAction
 from PyQt6.QtCore import QTimer, Qt
 
 # Precompile emoji pattern
 EMOJI_PATTERN = re.compile(r':[a-zA-Z0-9_\-]+:')
+
+# Custom emoji mappings
+CUSTOM_EMOJIS = {
+    ":rain_cloud:": "🌧️",
+    ":partly_sunny_rain:": "🌦️",  # Add this custom mapping
+    # Add more custom mappings here
+}
 
 def flag_shortcode_to_emoji(shortcode):
     country_code = shortcode[6:-1]
@@ -25,16 +31,36 @@ def flag_shortcode_to_emoji(shortcode):
 def replace_emoji_codes(text):
     def replace_match(match):
         code = match.group(0)
+
+        # First check for flag shortcodes
         if code.startswith(":flag-") and code.endswith(":"):
             return flag_shortcode_to_emoji(code)
-        else:
+        
+        # Check if the emoji code exists in the custom mappings
+        if code in CUSTOM_EMOJIS:
+            return CUSTOM_EMOJIS[code]
+        
+        # Use the emoji library if the code isn't a custom one
+        try:
             return emoji.emojize(code, language='alias')
+        except Exception:
+            # Return the code as is if no emoji is found
+            return code
     
     # Handle newlines by respecting them and adding an extra newline after existing ones
+    # But make sure there's no additional space between emojis and text
     text = text.replace('\n', '\n\n')  # Add a newline after each existing newline
-    return EMOJI_PATTERN.sub(replace_match, text)
+    
+    # Replace emojis and ensure no spaces are left between emoji and surrounding text
+    text = EMOJI_PATTERN.sub(replace_match, text)
+    
+    # Remove any spaces that may have been left between text and emojis
+    text = re.sub(r'\s+([^\s\w])', r'\1', text)  # Remove spaces before emojis
+    
+    return text
 
 class ClipboardWatcher(QSystemTrayIcon):
+
     def __init__(self, icon, parent=None):
         super().__init__(icon, parent)
         self.setToolTip("Slack Emoji Fixer")
@@ -97,7 +123,6 @@ def main():
     tray_icon.show()
 
     print("🚀 Slack Emoji Fixer is running")
-    
     sys.exit(app.exec())
 
 if __name__ == "__main__":
