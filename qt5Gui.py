@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+#This script uses PyQt5 to adapt systrtray menu to default theme, for some reason, pyqt6 doesn't follow the theme
+
 import sys
 import os
 import pyperclip
