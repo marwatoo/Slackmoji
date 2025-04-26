@@ -4,21 +4,14 @@ import sys
 import os
 import pyperclip
 import emoji
-import re
+
 from PyQt6.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt6.QtGui import QIcon, QAction
-from PyQt6.QtCore import QTimer, Qt
+from PyQt6.QtCore import QTimer
 
-# Precompile emoji pattern
-EMOJI_PATTERN = re.compile(r':[a-zA-Z0-9_\-]+:')
+from custom_emojis import CUSTOM_EMOJIS, EMOJI_PATTERN
 
-# Custom emoji mappings
-CUSTOM_EMOJIS = {
-    ":rain_cloud:": "🌧️",
-    ":partly_sunny_rain:": "🌦️",  # Add this custom mapping
-    # Add more custom mappings here
-}
-
+# Function to fix Slack emoji shortcodes to emojis
 def flag_shortcode_to_emoji(shortcode):
     country_code = shortcode[6:-1]
     if len(country_code) == 2:
@@ -28,6 +21,7 @@ def flag_shortcode_to_emoji(shortcode):
     else:
         return shortcode
 
+# Function to replace emoji text with actual emojis
 def replace_emoji_codes(text):
     def replace_match(match):
         code = match.group(0)
@@ -59,6 +53,7 @@ def replace_emoji_codes(text):
     
     return text
 
+# Class to handle the system tray icon and clipboard monitoring
 class ClipboardWatcher(QSystemTrayIcon):
 
     def __init__(self, icon, parent=None):
@@ -102,6 +97,7 @@ class ClipboardWatcher(QSystemTrayIcon):
         if reason == QSystemTrayIcon.ActivationReason.Context:
             self.menu.exec()  # Display the context menu
 
+# Main function to set up the application
 def main():
     app = QApplication(sys.argv)
 

@@ -2,17 +2,8 @@
 import time
 import pyperclip
 import emoji
-import re
 
-# Precompile the emoji pattern
-EMOJI_PATTERN = re.compile(r':[a-zA-Z0-9_\-]+:')
-
-# Custom emoji mappings
-CUSTOM_EMOJIS = {
-    ":rain_cloud:": "🌧️",
-    ":partly_sunny_rain:": "🌦️",  # Add this custom mapping
-    # Add more custom mappings here
-}
+from custom_emojis import CUSTOM_EMOJIS, EMOJI_PATTERN
 
 # Function to convert Slack emoji shortcodes to emojis
 def flag_shortcode_to_emoji(shortcode):
