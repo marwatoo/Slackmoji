@@ -4,6 +4,7 @@ import sys
 import os
 import pyperclip
 import emoji
+import re
 
 from PyQt6.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt6.QtGui import QIcon, QAction

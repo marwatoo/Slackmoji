@@ -2,6 +2,7 @@
 import time
 import pyperclip
 import emoji
+import re
 
 from custom_emojis import CUSTOM_EMOJIS, EMOJI_PATTERN
 
