@@ -18,8 +18,6 @@ def main():
                 if ':' in current_clipboard:
                     # Replace emoji codes with actual emojis
                     converted = replace_emoji_codes(current_clipboard)
-                    # Double newlines for readability
-                    # converted = double_newlines(converted)
                     # Update the clipboard only if changed
                     if converted != current_clipboard:
                         print(f"\n[Clipboard Updated]")
