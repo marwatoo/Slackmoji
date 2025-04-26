@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+import os
 import pyperclip
 import emoji
 import re
@@ -78,19 +79,24 @@ class ClipboardWatcher(QSystemTrayIcon):
 def main():
     app = QApplication(sys.argv)
 
-    # Check if the icon exists and is valid
-    icon_path = "smiley.png"  # Replace with the path to your icon
+    # Get the directory where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Construct the path to the icon in the same directory as the script
+    icon_path = os.path.join(script_dir, "smiley.png")  # Replace with your icon filename
+    
+    # Check if the icon exists
     icon = QIcon(icon_path)
     
     if icon.isNull():
-        print("Icon is null. Check the file path.")
+        print(f"Icon not found at {icon_path}. Check the file path.")
         icon = QIcon.fromTheme("application-default-icon")  # Fallback to default icon
 
     # Set the tray icon
     tray_icon = ClipboardWatcher(icon)
     tray_icon.show()
 
-    print("Tray icon should now be visible.")
+    print("🚀 Slack Emoji Fixer is running")
     
     sys.exit(app.exec())
 
