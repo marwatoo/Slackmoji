@@ -1,8 +1,7 @@
 #!/usr/bin/python3
+
 import time
 import pyperclip
-import emoji
-import re
 
 from custom_emojis import CUSTOM_EMOJIS, EMOJI_PATTERN
 from util_emojis import replace_emoji_codes
