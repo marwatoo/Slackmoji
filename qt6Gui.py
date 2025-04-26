@@ -63,7 +63,7 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
     # Construct the path to the icon in the same directory as the script
-    icon_path = os.path.join(script_dir, "smiley.png")  # Replace with your icon filename
+    icon_path = os.path.join(script_dir, "smile.png")  # Replace with your icon filename
     
     # Check if the icon exists
     icon = QIcon(icon_path)
