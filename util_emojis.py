@@ -33,18 +33,20 @@ def replace_emoji_codes(text):
             # Return the code as is if no emoji is found
             return code
     
-    # Add a newline after each existing newlines for more readability on social media like X, Instagram, etc.
+    original_text = text  # Keep a copy to detect changes
 
-    # text = text.replace('\n', '\n\n') this line adds newline blindly
-    text = re.sub(r'(?<!\n)\n(?!\n)', '\n\n', text)
+    # Replace emojis first (without touching newlines)
+    replaced_text = EMOJI_PATTERN.sub(replace_match, text)
+
+    # Remove spaces inside emoji shortcodes (before and after word)
+    replaced_text = re.sub(r':\s*([a-zA-Z0-9\-_]+)\s*:', r':\1:', replaced_text)
+
+    # Check if anything changed
+    if replaced_text != original_text:
+        # If text changed (meaning emojis were added), handle newlines
+        replaced_text = re.sub(r'(?<!\n)\n(?!\n)', '\n\n', replaced_text)
     
-    # Replace emojis and ensure no spaces are left between emoji and surrounding text
-    text = EMOJI_PATTERN.sub(replace_match, text)
-    
-    # Remove space only inside emoji shortcodes (between the colons)
-    text = re.sub(r':\s*([a-zA-Z0-9\-_]+)\s*:', r':\1:', text)
-    
-    return text
+    return replaced_text
 
 # Function to double newlines, needed for readability on Social Media, like X, Instagram, etc.
 def double_newlines(text):
