@@ -35,7 +35,8 @@ def replace_emoji_codes(text):
     
     # Add a newline after each existing newlines for more readability on social media like X, Instagram, etc.
 
-    text = text.replace('\n', '\n\n')  
+    # text = text.replace('\n', '\n\n') this line adds newline blindly
+    text = re.sub(r'(?<!\n)\n(?!\n)', '\n\n', text)
     
     # Replace emojis and ensure no spaces are left between emoji and surrounding text
     text = EMOJI_PATTERN.sub(replace_match, text)
