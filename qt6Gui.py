@@ -77,6 +77,8 @@ def main():
     tray_icon.show()
 
     print("🚀 Slack Emoji Fixer is running")
+    if os.environ.get("XDG_SESSION_TYPE") == "wayland":
+        pyperclip.set_clipboard("wl-clipboard")
     sys.exit(app.exec())
 
 if __name__ == "__main__":

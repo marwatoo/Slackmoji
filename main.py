@@ -2,6 +2,7 @@
 
 import time
 import pyperclip
+import os
 
 from custom_emojis import CUSTOM_EMOJIS, EMOJI_PATTERN
 from util_emojis import replace_emoji_codes
@@ -10,6 +11,8 @@ from util_emojis import replace_emoji_codes
 def main():
     last_clipboard = ""
     print("🚀 Slack Emoji Fixer is running. Press Ctrl+C to stop.")
+    if os.environ.get("XDG_SESSION_TYPE") == "wayland":
+        pyperclip.set_clipboard("wl-clipboard")
     while True:
         try:
             current_clipboard = pyperclip.paste()
