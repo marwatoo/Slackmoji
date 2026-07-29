@@ -4,6 +4,14 @@
 
 Slack copies text like `:smile:` or `:tada:` instead of the actual emoji character — which looks broken the moment you paste it into X, Instagram, LinkedIn, or anywhere else. Slackmoji watches your clipboard in the background and silently converts those shortcodes into real emoji, so what you paste always looks right.
 
+<div align="center">
+
+<img src="./slack.png" width="90%" alt="Debian desktop running dwm and st">
+<sub>Demo</sub>
+<br>
+
+</div>
+
 ---
 
 ## ✨ Features
